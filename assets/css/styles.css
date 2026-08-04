@@ -313,7 +313,16 @@ p:last-child { margin-bottom: 0; }
   gap: clamp(2rem, 5vw, 4.5rem);
   align-items: center;
 }
-.hero h1 { margin-bottom: .35em; }
+.hero h1 { margin-bottom: .3em; }
+.hero__promise {
+  font-family: var(--font-display);
+  font-size: clamp(1.2rem, 2.6vw, 1.8rem);
+  font-weight: 500;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin: 0 0 1.1rem;
+}
 .hero__sub { font-size: clamp(1.05rem, 1.75vw, 1.3rem); color: var(--text-muted); max-width: 34rem; }
 .hero__sub strong { color: var(--text); font-weight: 600; }
 .hero .btn-row { margin-top: 2rem; }
@@ -583,6 +592,8 @@ p:last-child { margin-bottom: 0; }
   padding: .4rem;
 }
 .venture__logo img { max-height: 100%; width: auto; }
+.venture__logo--photo { background: none; padding: 0; overflow: hidden; }
+.venture__logo--photo img { width: 100%; height: 100%; object-fit: cover; }
 .venture h3 { margin-bottom: .35rem; }
 .venture__kicker {
   font-size: .74rem;
