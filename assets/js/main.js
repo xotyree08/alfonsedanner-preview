@@ -137,6 +137,19 @@
     form.addEventListener('submit', function (e) {
       e.preventDefault();
 
+      // The form carries `novalidate` so these messages are ours rather than the
+      // browser's, which means the validity check has to be run by hand — without
+      // it a blank or mistyped submission reports success and goes nowhere.
+      if (typeof form.checkValidity === 'function' && !form.checkValidity()) {
+        var firstInvalid = form.querySelector(':invalid');
+        if (firstInvalid) {
+          firstInvalid.focus();
+          if (typeof form.reportValidity === 'function') form.reportValidity();
+        }
+        say('Please fill in your name, a valid email, and a message.', 'error');
+        return;
+      }
+
       // Honeypot: silently accept and drop obvious bot submissions.
       if (form.querySelector('[name="_company"]') && form.querySelector('[name="_company"]').value) {
         say('Thanks — your message is on its way.');
