@@ -346,6 +346,28 @@ p:last-child { margin-bottom: 0; }
   z-index: -1;
 }
 
+/* Portrait variant. The tilt belongs to a book, not a person, and the warm
+   studio backdrop would otherwise sit on the dark page as a lit slab — so the
+   photo is squared up and its lower edge is feathered into the background. */
+.hero__art--portrait img {
+  width: min(100%, 400px);
+  aspect-ratio: 4 / 5;      /* trims the frame so the stat strip stays in view */
+  object-fit: cover;
+  object-position: 50% 0%;
+  border-radius: 16px;
+  transform: none;
+  box-shadow: none;
+  -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 42%, rgba(0, 0, 0, .86) 58%, rgba(0, 0, 0, .5) 74%, rgba(0, 0, 0, .16) 89%, transparent 100%);
+          mask-image: linear-gradient(to bottom, #000 0%, #000 42%, rgba(0, 0, 0, .86) 58%, rgba(0, 0, 0, .5) 74%, rgba(0, 0, 0, .16) 89%, transparent 100%);
+}
+.hero__art--portrait:hover img { transform: translateY(-6px); }
+.hero__art--portrait::after {
+  inset: 6% 4% 10% 4%;
+  height: auto;
+  background: radial-gradient(ellipse at 50% 50%, rgba(255, 106, 31, .28), transparent 68%);
+  filter: blur(46px);
+}
+
 .hero__stats {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -375,6 +397,7 @@ p:last-child { margin-bottom: 0; }
   .hero__grid { grid-template-columns: 1fr; }
   .hero__art { order: -1; }
   .hero__art img { width: min(70%, 280px); }
+  .hero__art--portrait img { width: min(78%, 330px); }
 }
 
 /* ---------- page hero (interior pages) ---------- */
