@@ -434,6 +434,30 @@ p:last-child { margin-bottom: 0; }
 .page-hero .wrap { position: relative; }
 .page-hero p { max-width: 46rem; }
 
+/* Split page hero — headline beside a portrait. Same feathering as the home
+   hero so the two pages read as one system. */
+.page-hero--split .page-hero__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr);
+  gap: clamp(2rem, 5vw, 4rem);
+  align-items: center;
+}
+.page-hero__portrait img {
+  width: min(100%, 420px);
+  margin-inline: auto;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  object-position: 50% 0%;
+  border-radius: 16px;
+  -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 42%, rgba(0, 0, 0, .86) 58%, rgba(0, 0, 0, .5) 74%, rgba(0, 0, 0, .16) 89%, transparent 100%);
+          mask-image: linear-gradient(to bottom, #000 0%, #000 42%, rgba(0, 0, 0, .86) 58%, rgba(0, 0, 0, .5) 74%, rgba(0, 0, 0, .16) 89%, transparent 100%);
+}
+@media (max-width: 880px) {
+  .page-hero--split .page-hero__grid { grid-template-columns: 1fr; }
+  .page-hero__portrait { order: -1; }
+  .page-hero__portrait img { width: min(78%, 320px); }
+}
+
 /* ---------- RGD triad ---------- */
 .triad { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.25rem; }
 .pillar {
