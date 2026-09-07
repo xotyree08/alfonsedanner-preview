@@ -328,14 +328,14 @@ p:last-child { margin-bottom: 0; }
 .hero .btn-row { margin-top: 2rem; }
 
 .hero__art { position: relative; display: grid; place-items: center; }
-.hero__art img {
+.hero__art > img {
   width: min(100%, 330px);
   border-radius: 6px;
   box-shadow: var(--shadow), 0 0 0 1px rgba(255, 255, 255, .08);
   transform: rotate(-2.5deg);
   transition: transform .6s var(--ease);
 }
-.hero__art:hover img { transform: rotate(0deg) translateY(-6px); }
+.hero__art:hover > img { transform: rotate(0deg) translateY(-6px); }
 .hero__art::after {
   content: "";
   position: absolute;
@@ -349,8 +349,14 @@ p:last-child { margin-bottom: 0; }
 /* Portrait variant. The tilt belongs to a book, not a person, and the warm
    studio backdrop would otherwise sit on the dark page as a lit slab — so the
    photo is squared up and its lower edge is feathered into the background. */
-.hero__art--portrait img {
+.hero__stack {
+  position: relative;
   width: min(100%, 400px);
+  margin-bottom: 1.75rem;   /* room for the book's overhang */
+  isolation: isolate;
+}
+.hero__portrait {
+  width: 100%;
   aspect-ratio: 4 / 5;      /* trims the frame so the stat strip stays in view */
   object-fit: cover;
   object-position: 50% 0%;
@@ -360,7 +366,23 @@ p:last-child { margin-bottom: 0; }
   -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 42%, rgba(0, 0, 0, .86) 58%, rgba(0, 0, 0, .5) 74%, rgba(0, 0, 0, .16) 89%, transparent 100%);
           mask-image: linear-gradient(to bottom, #000 0%, #000 42%, rgba(0, 0, 0, .86) 58%, rgba(0, 0, 0, .5) 74%, rgba(0, 0, 0, .16) 89%, transparent 100%);
 }
-.hero__art--portrait:hover img { transform: translateY(-6px); }
+/* The book leans in at the base of the portrait, where the photo has faded out.
+   The tilt that looked wrong on a person is exactly right on a book. */
+.hero__book {
+  position: absolute;
+  left: -11%;
+  bottom: -8%;
+  z-index: 1;
+  width: 40%;
+  aspect-ratio: 2 / 3;
+  object-fit: cover;
+  border-radius: 4px;
+  transform: rotate(-5deg);
+  box-shadow: 0 28px 55px -18px rgba(0, 0, 0, .95), 0 0 0 1px rgba(255, 255, 255, .12);
+  transition: transform .5s var(--ease);
+}
+.hero__art--portrait:hover .hero__portrait { transform: translateY(-6px); }
+.hero__art--portrait:hover .hero__book { transform: rotate(-2deg) translateY(-10px); }
 .hero__art--portrait::after {
   inset: 6% 4% 10% 4%;
   height: auto;
@@ -396,8 +418,9 @@ p:last-child { margin-bottom: 0; }
 @media (max-width: 880px) {
   .hero__grid { grid-template-columns: 1fr; }
   .hero__art { order: -1; }
-  .hero__art img { width: min(70%, 280px); }
-  .hero__art--portrait img { width: min(78%, 330px); }
+  .hero__art > img { width: min(70%, 280px); }
+  .hero__art--portrait .hero__stack { width: min(80%, 340px); margin-bottom: 3.25rem; }
+  .hero__book { left: -8%; width: 38%; }
 }
 
 /* ---------- page hero (interior pages) ---------- */
