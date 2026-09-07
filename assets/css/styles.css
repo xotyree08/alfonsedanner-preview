@@ -373,7 +373,7 @@ p:last-child { margin-bottom: 0; }
   left: -11%;
   bottom: -8%;
   z-index: 1;
-  width: 46%;
+  width: 53%;
   aspect-ratio: 2 / 3;
   object-fit: cover;
   border-radius: 4px;
@@ -420,7 +420,7 @@ p:last-child { margin-bottom: 0; }
   .hero__art { order: -1; }
   .hero__art > img { width: min(70%, 280px); }
   .hero__art--portrait .hero__stack { width: min(80%, 340px); margin-bottom: 3.25rem; }
-  .hero__book { left: -8%; width: 38%; }
+  .hero__book { left: -8%; width: 50%; }
 }
 
 /* ---------- page hero (interior pages) ---------- */
