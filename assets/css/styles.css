@@ -271,7 +271,7 @@ p:last-child { margin-bottom: 0; }
 .nav-toggle[aria-expanded="true"] span::before { transform: translateY(6px) rotate(45deg); }
 .nav-toggle[aria-expanded="true"] span::after  { transform: translateY(-6px) rotate(-45deg); }
 
-@media (max-width: 900px) {
+@media (max-width: 1120px) {
   .nav-toggle { display: grid; }
   .header-actions .social-row { display: none; }
   .nav {
@@ -370,7 +370,7 @@ p:last-child { margin-bottom: 0; }
    The tilt that looked wrong on a person is exactly right on a book. */
 .hero__book {
   position: absolute;
-  left: -16%;
+  left: calc(-1 * clamp(24px, (100vw - 1040px) * 0.36, 88px));
   bottom: -8%;
   z-index: 1;
   width: 53%;
@@ -423,11 +423,14 @@ p:last-child { margin-bottom: 0; }
   .hero__book { left: -12%; width: 50%; }
 }
 
-/* Between the phone breakpoint and ~1080px the text column is at its narrowest,
-   so the book pulls its overhang back in to keep clear of the copy. */
-@media (min-width: 881px) and (max-width: 1080px) {
-  .hero__book { left: -8%; }
+/* On the narrowest phones the brand lockup plus the menu button overran the
+   header; the tagline's wide tracking was doing it. */
+@media (max-width: 380px) {
+  .brand__name { font-size: 1.02rem; letter-spacing: .12em; }
+  .brand__tag  { font-size: .53rem; letter-spacing: .16em; }
+  .site-header__inner { gap: .75rem; }
 }
+
 
 /* ---------- page hero (interior pages) ---------- */
 .page-hero { padding-block: clamp(3rem, 7vw, 5.5rem) clamp(2rem, 4vw, 3rem); position: relative; }
@@ -817,6 +820,12 @@ p:last-child { margin-bottom: 0; }
   padding-bottom: 2.5rem;
 }
 @media (max-width: 760px) { .footer-grid { grid-template-columns: 1fr 1fr; } .footer-grid > :first-child { grid-column: 1 / -1; } }
+/* The email address is long enough to force a footer column wider than a small
+   phone, which pushed the whole grid past the viewport. */
+.footer-grid { grid-template-columns: minmax(0, 1.4fr) repeat(2, minmax(0, 1fr)); }
+.footer-links a, .footer-links span { overflow-wrap: anywhere; }
+@media (max-width: 760px) { .footer-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); } }
+@media (max-width: 480px) { .footer-grid { grid-template-columns: minmax(0, 1fr); } }
 .footer-grid h4 {
   font-size: .78rem;
   letter-spacing: .22em;
