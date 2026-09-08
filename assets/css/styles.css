@@ -370,7 +370,7 @@ p:last-child { margin-bottom: 0; }
    The tilt that looked wrong on a person is exactly right on a book. */
 .hero__book {
   position: absolute;
-  left: -11%;
+  left: -16%;
   bottom: -8%;
   z-index: 1;
   width: 53%;
@@ -420,7 +420,13 @@ p:last-child { margin-bottom: 0; }
   .hero__art { order: -1; }
   .hero__art > img { width: min(70%, 280px); }
   .hero__art--portrait .hero__stack { width: min(80%, 340px); margin-bottom: 3.25rem; }
-  .hero__book { left: -8%; width: 50%; }
+  .hero__book { left: -12%; width: 50%; }
+}
+
+/* Between the phone breakpoint and ~1080px the text column is at its narrowest,
+   so the book pulls its overhang back in to keep clear of the copy. */
+@media (min-width: 881px) and (max-width: 1080px) {
+  .hero__book { left: -8%; }
 }
 
 /* ---------- page hero (interior pages) ---------- */
