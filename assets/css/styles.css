@@ -419,6 +419,20 @@ p:last-child { margin-bottom: 0; }
   color: var(--text-dim);
 }
 
+/* Below ~560px a 3-up strip leaves each label ~70px, which silently truncates
+   "Years to Rebuild Everything". Stack to rows and set number beside label. */
+@media (max-width: 560px) {
+  .hero__stats { grid-template-columns: 1fr; }
+  .hero__stats div {
+    display: flex;
+    align-items: baseline;
+    gap: .9rem;
+    padding: 1rem 1.25rem;
+  }
+  .hero__stats dt { font-size: 1.75rem; flex: none; min-width: 3.1rem; }
+  .hero__stats dd { margin: 0; }
+}
+
 @media (max-width: 880px) {
   .hero__grid { grid-template-columns: 1fr; }
   .hero__art { order: -1; }
@@ -655,7 +669,7 @@ p:last-child { margin-bottom: 0; }
 }
 
 /* ---------- ventures ---------- */
-.venture-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; }
+.venture-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr)); gap: 1.5rem; }
 .venture {
   display: flex;
   flex-direction: column;
