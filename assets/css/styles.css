@@ -203,10 +203,11 @@ p:last-child { margin-bottom: 0; }
   color: var(--gold);
   margin-top: .35rem;
 }
-.nav { display: flex; align-items: center; gap: 2rem; }
+.nav { display: flex; align-items: center; gap: 1.4rem; }
 .nav a {
   font-family: var(--font-display);
   font-size: .88rem;
+  white-space: nowrap;
   font-weight: 500;
   letter-spacing: .15em;
   text-transform: uppercase;
@@ -228,7 +229,9 @@ p:last-child { margin-bottom: 0; }
 }
 .nav a:hover, .nav a[aria-current="page"] { color: var(--text); }
 .nav a:hover::after, .nav a[aria-current="page"]::after { transform: scaleX(1); }
-.header-actions { display: flex; align-items: center; gap: 1rem; }
+.header-actions { display: flex; align-items: center; gap: .75rem; }
+.site-header .social-row { gap: .15rem; }
+.site-header .social-row a { width: 32px; height: 32px; }
 
 .social-row { display: flex; align-items: center; gap: .35rem; }
 .social-row a {
@@ -271,9 +274,10 @@ p:last-child { margin-bottom: 0; }
 .nav-toggle[aria-expanded="true"] span::before { transform: translateY(6px) rotate(45deg); }
 .nav-toggle[aria-expanded="true"] span::after  { transform: translateY(-6px) rotate(-45deg); }
 
+@media (max-width: 1279px) { .header-actions .social-row { display: none; } }
+
 @media (max-width: 1120px) {
   .nav-toggle { display: grid; }
-  .header-actions .social-row { display: none; }
   .nav {
     position: fixed;
     inset: 74px 0 auto;
@@ -810,6 +814,17 @@ p:last-child { margin-bottom: 0; }
 }
 .cta-band .btn-row { justify-content: center; margin-top: 2rem; }
 .cta-band p { max-width: 40rem; margin-inline: auto; }
+/* Multi-paragraph band copy: heading stays centred, prose gets a real measure
+   and a left edge so it is not read as centred blocks. */
+.cta-band__body {
+  max-width: 46rem;
+  margin-inline: auto;
+  text-align: left;
+  display: grid;
+  gap: 1.1rem;
+}
+.cta-band__body p { max-width: none; margin: 0; }
+@media (max-width: 600px) { .cta-band__body { text-align: left; } }
 
 /* ---------- footer ---------- */
 .site-footer { background: var(--ink); padding-block: clamp(3rem, 6vw, 4.5rem) 2rem; }

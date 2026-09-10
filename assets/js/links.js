@@ -11,12 +11,14 @@ window.SITE_LINKS = {
   email:      "AD3mediagroup@gmail.com",
   bookAmazon: "https://www.amazon.com/dp/B0FJYCD6RL",
 
-  /* --- TODO: client still owes us these (see README "Open items") --- */
-  instagram:  "",   // e.g. https://instagram.com/AlfonseDannerRGD
-  tiktok:     "",   // e.g. https://tiktok.com/@AlfonseDannerRGD
-  youtube:    "",   // "Alfonse Danner | RGD Blueprint" channel URL
-  facebook:   "",   // "Alfonse 'Pop' Danner" page URL
-  linkedin:   "",
+  /* --- socials, confirmed by the client 2026-09-10 --- */
+  instagram:  "https://www.instagram.com/popdanner",
+  tiktok:     "https://www.tiktok.com/@alfonsedanner",
+  youtube:    "https://www.youtube.com/@alfonsedanner-vy9dg",
+  facebook:   "https://www.facebook.com/alfonse.danner",
+  linkedin:   "https://www.linkedin.com/in/alfonse-danner-939919329",
+
+  /* --- still outstanding --- */
   linktree:   "",
 
   ad3Site:    "",   // AD3 Media Group site, if it gets its own
