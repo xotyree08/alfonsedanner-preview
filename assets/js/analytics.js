@@ -26,8 +26,17 @@
    ========================================================================== */
 
 window.SITE_ANALYTICS = {
-  provider: "",
+  // Cookieless by decision — no consent banner, nothing to disclose beyond a
+  // normal privacy note. Still inert until `id` is filled in.
+  provider: "cloudflare",
+
+  // >>> PASTE THE BEACON TOKEN HERE AND ANALYTICS GOES LIVE <<<
+  // Cloudflare dashboard -> Analytics & Logs -> Web Analytics -> Add a site ->
+  // enter alfonsedanner.com -> copy the token out of the snippet it shows you.
+  // It looks like: "a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6"
+  // (Free, and it does NOT require moving the domain's nameservers.)
   id:       "",
+
   host:     ""
 };
 
