@@ -125,6 +125,16 @@
     var form = document.getElementById('contact-form');
     if (!form) return;
 
+    // Deep links like contact.html?topic=RGD+InnerPower+Launch+List arrive from the
+    // Join the Launch List button; preselect that subject so the visitor doesn't
+    // have to find it, but only if it is a subject the form actually offers.
+    var wanted = new URLSearchParams(window.location.search).get('topic');
+    var topic = form.querySelector('#topic');
+    if (wanted && topic) {
+      var match = Array.prototype.filter.call(topic.options, function (o) { return o.value === wanted; })[0];
+      if (match) topic.value = match.value;
+    }
+
     var status = form.querySelector('.form-status');
     var submit = form.querySelector('[type="submit"]');
 
