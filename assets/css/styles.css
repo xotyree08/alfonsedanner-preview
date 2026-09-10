@@ -724,6 +724,110 @@ p:last-child { margin-bottom: 0; }
 .program__note { font-size: .92rem; color: var(--text-dim); margin: 0; max-width: 26rem; }
 @media (max-width: 880px) { .program__grid { grid-template-columns: 1fr; } }
 
+/* ---------- media: clip grid + press kit ---------- */
+.clip-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(280px, 100%), 1fr)); gap: 1.5rem; }
+.clip {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: var(--surface);
+  transition: transform .3s var(--ease), border-color .3s var(--ease);
+}
+.clip:hover { transform: translateY(-4px); border-color: var(--line-strong); }
+.clip__thumb, .clip__player {
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border: 0;
+  padding: 0;
+  background: #000;
+  overflow: hidden;
+}
+.clip__thumb { cursor: pointer; }
+.clip__thumb img, .clip__player iframe, .clip__player video {
+  width: 100%; height: 100%;
+  border: 0;
+  display: block;
+  /* contain, not cover: YouTube's 16:9 thumbnails fill the card exactly, while a
+     vertical short is pillarboxed on black instead of being cropped to a slice. */
+  object-fit: contain;
+}
+.clip__play {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 58px; height: 58px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: linear-gradient(120deg, var(--ember-deep), var(--ember));
+  box-shadow: 0 10px 30px -10px rgba(255, 106, 31, .9);
+  transition: transform .3s var(--ease);
+}
+.clip__play::after {
+  content: "";
+  width: 0; height: 0;
+  margin-left: 5px;
+  border-left: 17px solid #fff;
+  border-top: 10px solid transparent;
+  border-bottom: 10px solid transparent;
+}
+.clip__thumb:hover .clip__play { transform: scale(1.09); }
+.clip__thumb:focus-visible { outline: 2px solid var(--gold); outline-offset: -3px; }
+.clip__body { padding: 1.25rem 1.35rem 1.4rem; display: flex; flex-direction: column; gap: .5rem; }
+.clip__body h3 { font-size: 1.12rem; margin: 0; }
+.clip__body p { font-size: .95rem; color: var(--text-muted); margin: 0; }
+.clip__body time { font-size: .74rem; letter-spacing: .16em; text-transform: uppercase; color: var(--text-dim); }
+
+.presskit { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(0, .65fr); gap: clamp(1.75rem, 4vw, 3rem); align-items: start; }
+.presskit__bios { display: grid; gap: 1.25rem; }
+.bio-block { padding: 1.5rem 1.6rem; border: 1px solid var(--line); border-radius: var(--radius); background: var(--ink-2); }
+.bio-block__head { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-bottom: .85rem; }
+.bio-block h3 { margin: 0; font-size: 1rem; letter-spacing: .06em; }
+.bio-block p { margin: 0; color: var(--text-muted); font-size: 1rem; }
+.copy-btn {
+  flex: none;
+  padding: .38rem .8rem;
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--text-muted);
+  font-family: var(--font-display);
+  font-size: .7rem;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: color .2s var(--ease), border-color .2s var(--ease);
+}
+.copy-btn:hover { color: var(--gold); border-color: var(--gold); }
+.copy-btn.is-done { color: var(--gold); border-color: var(--gold); }
+
+.presskit__assets { padding: 1.75rem 1.6rem; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--surface); }
+.presskit__assets h3 { margin: 0 0 1.15rem; font-size: 1rem; letter-spacing: .06em; }
+.asset-list { list-style: none; margin: 0; padding: 0; display: grid; gap: .85rem; }
+.asset-list a {
+  display: grid;
+  grid-template-columns: 54px 1fr;
+  gap: .9rem;
+  align-items: center;
+  padding: .6rem;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  text-decoration: none;
+  color: var(--text);
+  transition: background-color .2s var(--ease), border-color .2s var(--ease);
+}
+.asset-list a:hover { background: var(--ink-2); border-color: var(--line); }
+.asset-list img { width: 54px; height: 68px; object-fit: cover; border-radius: 5px; }
+.asset-list span { display: grid; gap: .2rem; font-size: .8rem; color: var(--text-dim); }
+.asset-list strong { font-size: .95rem; font-weight: 600; color: var(--text); }
+
+@media (max-width: 880px) { .presskit { grid-template-columns: 1fr; } }
+
 /* ---------- ventures ---------- */
 .venture-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr)); gap: 1.5rem; }
 .venture {

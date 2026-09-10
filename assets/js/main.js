@@ -120,6 +120,100 @@
     });
   }
 
+  /* ------------------------------------------------------------ video grid
+     Renders the media library from videos.js. Nothing from YouTube loads until
+     a visitor actually clicks a clip — no iframes, no tracking, no 30 embeds
+     fighting over the page on first paint.                                    */
+  function wireVideoGrid() {
+    var grid = document.getElementById('video-grid');
+    if (!grid) return;
+
+    var list = (window.SITE_VIDEOS || []).filter(function (v) {
+      return v && (v.youtube || v.file) && v.title;
+    });
+
+    var empty = document.getElementById('video-empty');
+    if (!list.length) { grid.remove(); return; }
+    if (empty) empty.remove();
+
+    list.sort(function (a, b) { return String(b.date || '').localeCompare(String(a.date || '')); });
+
+    function prettyDate(iso) {
+      if (!/^\d{4}-\d{2}-\d{2}$/.test(iso || '')) return '';
+      var parts = iso.split('-');
+      var d = new Date(Date.UTC(+parts[0], +parts[1] - 1, +parts[2]));
+      if (isNaN(d)) return '';
+      return d.toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric', timeZone: 'UTC' });
+    }
+
+    list.forEach(function (v) {
+      var card = document.createElement('article');
+      card.className = 'clip';
+
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'clip__thumb';
+      btn.setAttribute('aria-label', 'Play: ' + v.title);
+
+      var img = document.createElement('img');
+      img.loading = 'lazy';
+      img.alt = '';
+      img.src = v.youtube
+        ? 'https://i.ytimg.com/vi/' + encodeURIComponent(v.youtube) + '/hqdefault.jpg'
+        : (v.poster || 'assets/img/video-poster.jpg');
+      btn.appendChild(img);
+
+      var play = document.createElement('span');
+      play.className = 'clip__play';
+      btn.appendChild(play);
+
+      var body = document.createElement('div');
+      body.className = 'clip__body';
+      var h3 = document.createElement('h3');
+      h3.textContent = v.title;
+      body.appendChild(h3);
+      if (v.blurb) {
+        var p = document.createElement('p');
+        p.textContent = v.blurb;
+        body.appendChild(p);
+      }
+      var when = prettyDate(v.date);
+      if (when) {
+        var time = document.createElement('time');
+        time.dateTime = v.date;
+        time.textContent = when;
+        body.appendChild(time);
+      }
+
+      btn.addEventListener('click', function () {
+        var holder = document.createElement('div');
+        holder.className = 'clip__player';
+        if (v.youtube) {
+          var f = document.createElement('iframe');
+          f.src = 'https://www.youtube-nocookie.com/embed/' + encodeURIComponent(v.youtube) + '?autoplay=1&rel=0';
+          f.title = v.title;
+          f.allow = 'accelerometer; autoplay; encrypted-media; picture-in-picture';
+          f.referrerPolicy = 'strict-origin-when-cross-origin';
+          f.setAttribute('allowfullscreen', '');
+          holder.appendChild(f);
+        } else {
+          var vid = document.createElement('video');
+          vid.src = v.file;
+          vid.poster = v.poster || '';
+          vid.controls = true;
+          vid.autoplay = true;
+          vid.playsInline = true;
+          holder.appendChild(vid);
+        }
+        btn.replaceWith(holder);
+      });
+
+      card.appendChild(btn);
+      card.appendChild(body);
+      grid.appendChild(card);
+    });
+  }
+
   /* ------------------------------------------------------------------ form */
   function wireForm() {
     var form = document.getElementById('contact-form');
@@ -202,6 +296,44 @@
     });
   }
 
+  /* ------------------------------------------------------- press-kit copy */
+  function wireCopyButtons() {
+    document.querySelectorAll('.copy-btn[data-copy]').forEach(function (btn) {
+      var target = document.querySelector(btn.getAttribute('data-copy'));
+      if (!target) { btn.remove(); return; }
+
+      btn.addEventListener('click', function () {
+        var text = (target.innerText || target.textContent || '').trim();
+        var done = function () {
+          var was = btn.textContent;
+          btn.textContent = 'Copied';
+          btn.classList.add('is-done');
+          setTimeout(function () { btn.textContent = was; btn.classList.remove('is-done'); }, 1800);
+        };
+
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(text).then(done, selectFallback);
+        } else {
+          selectFallback();
+        }
+
+        // No clipboard API (or it was refused): select the text so the
+        // visitor can copy it themselves rather than leaving them stuck.
+        function selectFallback() {
+          try {
+            var range = document.createRange();
+            range.selectNodeContents(target);
+            var sel = window.getSelection();
+            sel.removeAllRanges();
+            sel.addRange(range);
+            btn.textContent = 'Press ' + (/Mac|iP/.test(navigator.platform) ? '\u2318' : 'Ctrl') + '+C';
+            btn.classList.add('is-done');
+          } catch (e) { /* leave the button as it was */ }
+        }
+      });
+    });
+  }
+
   /* ------------------------------------------------------------------ year */
   function wireYear() {
     document.querySelectorAll('[data-year]').forEach(function (el) {
@@ -216,6 +348,8 @@
     wireHeader();
     wireReveal();
     wireVideo();
+    wireVideoGrid();
+    wireCopyButtons();
     wireForm();
     wireYear();
   }
